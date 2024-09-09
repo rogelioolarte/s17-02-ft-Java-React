@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios from "axios";
-import { MAIN_API, ROLE_ID_USER, ROLE_ID_SPECIALIST, ROUTE_LOGIN, ROUTE_REGISTER } from "../config/routes_api";
+import apiClient from '../config/apiClient';
+import { ROLE_ID_USER, ROLE_ID_SPECIALIST, ROUTE_LOGIN, ROUTE_REGISTER } from "../config/routes_api";
 import { User } from "../models/type";
 import { DEFAULT_STATE } from "../store/userSlice";
 import { toast } from 'sonner'
 
 export const register = async(username: string, password: string, type: string): Promise<User> => {
     try {
-        const response = await axios.post(MAIN_API.concat(ROUTE_REGISTER), {
+        const response = await apiClient.post(ROUTE_REGISTER, {
             username,
             password,
             rolesId: [type === "specialist" ? 
@@ -35,7 +35,7 @@ export const register = async(username: string, password: string, type: string):
 
 export const login = async(username: string, password: string): Promise<User> => {
     try {
-        const response = await axios.post(MAIN_API.concat(ROUTE_LOGIN), {
+        const response = await apiClient.post(ROUTE_LOGIN, {
             username,
             password
         });
