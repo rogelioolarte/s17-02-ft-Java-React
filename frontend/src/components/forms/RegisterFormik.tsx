@@ -61,7 +61,8 @@ export default function RegisterFormik({ type = "" }: { type?: string }) {
   return (
     <div className="w-full md:w-1/2 max-h-screen grid justify-items-center px-4 py-8 mt-5">
       <Typography className="text-center" variant="h4" color="black">
-        Regístrate en HeyDoc!
+        Regístrate como { type === "specialist" ? "Especialista" : 
+          type === "user" ? "Paciente" : null }
       </Typography>
       <Formik
         initialValues={initialCredentials}
