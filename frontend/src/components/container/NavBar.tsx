@@ -1,7 +1,4 @@
-import {
-  Navbar,
-  Typography,
-} from "@material-tailwind/react";
+import { Navbar, Typography } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import NavButton from "../pure/NavButton";
 import { useUserActions } from "../../hooks/useUserActions";

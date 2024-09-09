@@ -1,6 +1,6 @@
-import agenda from '../../assets/Icons/Services/agenda.svg'
-import historialClinico from '../../assets/Icons/Services/historialClinico.svg'
-import videoLlamadas from '../../assets/Icons/Services/videoLlamadas.svg'
+import agenda from '../../assets/icons/services/agenda.svg'
+import historialClinico from '../../assets/icons/services/historialClinico.svg'
+import videoLlamadas from '../../assets/icons/services/videoLlamadas.svg'
 
 const ServicesData = [
     {
@@ -14,7 +14,6 @@ const ServicesData = [
         title: 'Agenda',
         descripcion : 'Gestione eficientemente las agendas de los profesionales y permita a los pacientes realizar citas médicas mediante un portal web.',
         icon: agenda
-       
     },
     {
         id: 3,
