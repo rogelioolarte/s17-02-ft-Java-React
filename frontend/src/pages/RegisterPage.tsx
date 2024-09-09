@@ -6,7 +6,7 @@ export default function RegisterPage() {
 
     return (
       <div className="flex justify-center w-full">
-        <RegisterFormik type={type} />
+        <RegisterFormik type={ type ?? "" } />
       </div>
     )
 }

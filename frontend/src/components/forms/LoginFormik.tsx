@@ -44,9 +44,7 @@ export default function LoginFormik() {
       { setSubmitting }: FormikHelpers<LoginFormValues>) => {
     setSubmitting(false);
     const response = await login(values.email, values.password);
-    console.log("handle submit: " + JSON.stringify(response));
     if (isValidUser(response)) {
-      console.log('valid response')
       useSetUser(response);
       navigate("/")
     }

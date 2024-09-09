@@ -1,5 +1,6 @@
 import App from "../App"
 import Appp from "../Appp"
+import { TableWithSearch } from "../components/container/TableWithSearch"
 import AboutPage from "../pages/AboutPage"
 import HomePage from "../pages/HomePage"
 import LoginPage from "../pages/LoginPage"
@@ -15,6 +16,7 @@ const routes = [
             { path: '/', index: true, element: <AboutPage/>},
             { path: '/home', element: <HomePage/> },
             { path: '/login', element: <LoginPage/> },
+            { path: '/search', element: <TableWithSearch/> },
             { path: '/register/:type', element: <RegisterPage/> },
             { path: '/',  element: <Appp/>, 
                 children: [

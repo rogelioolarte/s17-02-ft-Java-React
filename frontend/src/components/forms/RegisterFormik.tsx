@@ -37,7 +37,7 @@ const registerSchema = Yup.object().shape({
 
 
 
-export default function RegisterFormik({ type = "" }: { type?: string }) {
+export default function RegisterFormik({ type }: { type: string }) {
   const { useSetUser } = useUserActions()
   const navigate = useNavigate()
 
@@ -51,7 +51,6 @@ export default function RegisterFormik({ type = "" }: { type?: string }) {
       { setSubmitting }: FormikHelpers<RegisterFormValues>) => {
     setSubmitting(false)
     const response = await register(values.email, values.password, type)
-    console.log("handle submit: "+JSON.stringify(response))
     if(isValidUser(response)){
       useSetUser(response)
       navigate("/")
