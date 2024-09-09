@@ -1,0 +1,5 @@
+export const MAIN_API = "https://telemedicina-v1-0.onrender.com"
+export const ROUTE_REGISTER = "/api/auth/register"
+export const ROUTE_LOGIN = "/api/auth/login"
+export const ROLE_ID_SPECIALIST = "9c765b7d-9eec-421b-85c6-6d53bcd002da"
+export const ROLE_ID_USER = "2326ec2c-4f97-4007-b52c-ba5561b434b"
