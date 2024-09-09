@@ -1,8 +1,8 @@
-import Aciu from "../../assets/images/Brands/marcaAciu.png";
-import CruzRoja from "../../assets/images/Brands/marcaCruzRoja.png";
-import Hartmann from "../../assets/images/Brands/marcaHartmann.png";
-import Crecimg from "../../assets/images/Brands/marcaCrecimg.png";
-import Vithas from "../../assets/images/Brands/marcaVithas.png";
+import Aciu from "../../assets/images/brands/marcaAciu.png";
+import CruzRoja from "../../assets/images/brands/marcaCruzRoja.png";
+import Hartmann from "../../assets/images/brands/marcaHartmann.png";
+import Crecimg from "../../assets/images/brands/marcaCrecimg.png";
+import Vithas from "../../assets/images/brands/marcaVithas.png";
 
 export default function Brands() {
     const brandsData = [
