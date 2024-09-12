@@ -7,7 +7,7 @@ import { Toaster } from 'sonner'
 function App() {
 
   return (
-    <div className='min-w-screen'>
+    <div className='min-w-screen flex flex-col'>
       <NavBar/>
       <Outlet/>
       <Footer/>
