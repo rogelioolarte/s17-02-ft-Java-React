@@ -34,6 +34,7 @@ export default function ScheduleConfigFormik() {
         : [...prev, value]
     );
   };
+  
   /// revisar
   const formatDay = (date: Date) => (date ? format(date, 'yyyy-MM-dd') : '');
 

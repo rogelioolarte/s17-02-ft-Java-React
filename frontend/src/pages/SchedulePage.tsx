@@ -5,5 +5,5 @@ export default function SchedulePage() {
     <div className='flex justify-center w-full'>
       <ScheduleFormik />
     </div>
-    );
+    )
 }
