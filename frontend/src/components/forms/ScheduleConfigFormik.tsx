@@ -1,7 +1,7 @@
 import { Button, Checkbox } from '@material-tailwind/react';
 import { format } from 'date-fns';
 import React, { useState } from 'react';
-import DatePicker from 'react-datepicker';
+import DatePicker from 'react-datepicker'; // eliminar libreria
 import 'react-datepicker/dist/react-datepicker.css';
 
 const DAYS_OF_WEEK = [
@@ -34,7 +34,8 @@ export default function ScheduleConfigFormik() {
         : [...prev, value]
     );
   };
-
+  
+  /// revisar
   const formatDay = (date: Date) => (date ? format(date, 'yyyy-MM-dd') : '');
 
   const formattedTime = (date: Date) => format(date, 'HH:mm:ss');

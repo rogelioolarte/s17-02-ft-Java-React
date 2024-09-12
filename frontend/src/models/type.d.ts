@@ -26,3 +26,15 @@ export interface NavButtonProps {
     classNameButton?: string;
     onClicked?: function;
 }
+
+export interface ScheduleConfigFormValues {
+    startDate: Date,
+    endDate: Date,
+    startTime: string,
+    endTime: string,
+    startRestTime: string,
+    endRestTime: string,
+    selectedDays: string[],
+    timeBooking: string,
+    timeBookingRest: string,
+}
