@@ -7,9 +7,10 @@ import {
 } from "@material-tailwind/react";
 import {
   TicketIcon,
-  UserGroupIcon,
   Square2StackIcon,
+  Cog6ToothIcon,
 } from "@heroicons/react/24/solid";
+import { Link } from "react-router-dom";
 
 function SidebarLight() {
   const LIST_ITEM_STYLES =
@@ -47,12 +48,14 @@ function SidebarLight() {
           </ListItemPrefix>
           Orders
         </ListItem>
-        <ListItem className={LIST_ITEM_STYLES}>
-          <ListItemPrefix>
-            <UserGroupIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Customers
-        </ListItem>
+        <Link to="/schedule">
+          <ListItem className={LIST_ITEM_STYLES}>
+            <ListItemPrefix>
+              <Cog6ToothIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Configura tu Horario
+          </ListItem>
+        </Link>
       </List>
     </Card>
   );
