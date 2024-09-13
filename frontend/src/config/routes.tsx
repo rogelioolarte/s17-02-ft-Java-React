@@ -16,17 +16,17 @@ const routes = [
     Component: App,
     children: [
       { path: '/', index: true, element: <AboutPage /> },
-      { path: '/home', element: <HomePage /> },
       { path: '/login', element: <LoginPage /> },
-      { path: '/search', element: <TableWithSearch /> },
       { path: '/register/:type', element: <RegisterPage /> },
       {
         path: '/',
         element: <Appp />,
         children: [
           { path: '/protected', element: <Protectedpage /> },
+          { path: '/home', element: <HomePage /> },
           { path: '/dashboard', element: <DashBoardPage /> },
           { path: '/schedule', element: <SchedulePage /> },
+          { path: '/search', element: <TableWithSearch /> },
         ],
       },
     ],

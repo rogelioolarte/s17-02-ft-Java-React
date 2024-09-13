@@ -1,5 +1,5 @@
 export default function DashBoardPage() {
   return (
-    <div>DashBoardPage</div>
+    <div className='flex justify-center h-full w-full'>DashBoardPage</div>
   )
 }

@@ -51,8 +51,13 @@ export default function NavBar() {
     <Navbar shadow={false} blurred={false} className="flex mx-auto py-1 border-b-2 rounded-none h-[5%]">
       <div className="flex flex-col md:flex-row items-center justify-between w-full text-blue-gray-900">
         <Link to="/" className="mx-4">
-          <Typography variant="h5" className="cursor-pointer py-1.5 px-10 bg-[#d9d9d9] rounded">
-            Hey Doc!
+          <Typography variant="h5" className=" flex gap-2 place-items-center cursor-pointer py-1.5 px-10 border border-[#34cdc8] rounded-lg">
+          <img
+            src="https://www.material-tailwind.com/logos/mt-logo.png"
+            alt="brand"
+            className="h-9 w-9"
+          />
+            HeyDoc!
           </Typography>
         </Link>
         <NavList />
