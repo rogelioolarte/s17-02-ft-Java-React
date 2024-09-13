@@ -1,5 +1,5 @@
 export default function Protectedpage() {
   return (
-    <div>Protectedpage</div>
+    <div className="">Protectedpage</div>
   )
 }

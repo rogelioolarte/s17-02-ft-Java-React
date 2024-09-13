@@ -42,7 +42,7 @@ function NavList() {
 
 export default function NavBar() {
   return (
-    <Navbar shadow={false} blurred={false} className="flex mx-auto py-3 border-b-2 rounded-none">
+    <Navbar shadow={false} blurred={false} className="flex mx-auto py-1 border-b-2 rounded-none h-[5%]">
       <div className="flex flex-col md:flex-row items-center justify-between w-full text-blue-gray-900">
         <Link to="/" className="mx-4">
           <Typography variant="h5" className="cursor-pointer py-1.5 px-10 bg-[#d9d9d9] rounded">

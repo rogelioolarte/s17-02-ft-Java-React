@@ -5,7 +5,7 @@ export default function RegisterPage() {
     const { type } = useParams();
 
     return (
-      <div className="flex justify-center w-full">
+      <div className="flex justify-center min-h-full min-w-full">
         <RegisterFormik type={ type ?? "" } />
       </div>
     )

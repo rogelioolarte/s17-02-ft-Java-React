@@ -7,7 +7,7 @@ import Service from "../components/pure/Service";
 
 export default function AboutPage() {
   return (
-    <div>
+    <div className="min-h-full min-w-full">
       <Hero />
       <Brands />
       <About />

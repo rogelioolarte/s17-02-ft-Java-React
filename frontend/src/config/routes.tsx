@@ -19,11 +19,14 @@ const routes = [
       { path: '/login', element: <LoginPage /> },
       { path: '/search', element: <TableWithSearch /> },
       { path: '/register/:type', element: <RegisterPage /> },
-      { path: '/form-schedule', element: <SchedulePage /> },
+      
       {
         path: '/',
         element: <Appp />,
-        children: [{ path: '/protected', element: <Protectedpage /> }],
+        children: [
+          { path: '/protected', element: <Protectedpage /> },
+          { path: '/schedule', element: <SchedulePage /> },
+        ],
       },
     ],
   },

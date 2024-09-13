@@ -13,14 +13,12 @@ export const register = async(username: string, password: string, type: string):
             rolesId: [type === "specialist" ? 
                 ROLE_ID_SPECIALIST : type === "user" ? ROLE_ID_USER : null]
         });
-        if(response.status === 201) {
-            return { 
-                token: response.data.token, 
-                roleId: response.data.userResponseDTO.roles[0].roleId, 
-                roleName: response.data.userResponseDTO.roles[0].roleName,
-                userId: response.data.userResponseDTO.userId, 
-                username: response.data.userResponseDTO.username, 
-            }
+        return { 
+            token: response.data.token, 
+            roleId: response.data.userResponseDTO.roles[0].roleId, 
+            roleName: response.data.userResponseDTO.roles[0].roleName,
+            userId: response.data.userResponseDTO.userId, 
+            username: response.data.userResponseDTO.username, 
         }
     } catch (error: any) {
         if (error.response && error.response.status === 400) {
@@ -39,14 +37,12 @@ export const login = async(username: string, password: string): Promise<User> =>
             username,
             password
         });
-        if(response.status === 200) {
-            return { 
-                token: response.data.token, 
-                roleId: response.data.userResponseDTO.roles[0].roleId, 
-                roleName: response.data.userResponseDTO.roles[0].roleName,
-                userId: response.data.userResponseDTO.userId, 
-                username: response.data.userResponseDTO.username, 
-            }
+        return { 
+            token: response.data.token, 
+            roleId: response.data.userResponseDTO.roles[0].roleId, 
+            roleName: response.data.userResponseDTO.roles[0].roleName,
+            userId: response.data.userResponseDTO.userId, 
+            username: response.data.userResponseDTO.username, 
         }
     } catch (error: any) {
         if (error.response && error.response.status === 400) {

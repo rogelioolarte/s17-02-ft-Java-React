@@ -7,10 +7,9 @@ const apiClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true,
 });
 
-apiClient.interceptors.request.use((config) => {
+axios.interceptors.request.use((config) => {
     const { user } = useUserActions()
     if (user.token) {
       config.headers.Authorization = `Bearer ${user.token}`;

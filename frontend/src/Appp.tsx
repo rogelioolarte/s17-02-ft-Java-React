@@ -4,14 +4,11 @@ import Sidebar from "./components/container/Sidebar";
 
 export default function Appp() {
   return (
-    <div>
       <RequireAuth>
-        <div className="">
+        <div className="min-h-full min-w-full relative flex">
           <Sidebar />
           <Outlet/>
         </div>
       </RequireAuth>
-    </div>
-    
   )
 }
