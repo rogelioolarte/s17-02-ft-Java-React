@@ -9,13 +9,19 @@ function NavList() {
   return (
     <div className="my-2 flex flex-col gap-2 md:flex-row md:items-center md:gap-6">
       <NavButton
+          linkTo="/schedule"
+          textButton="schedule"
+          variantButton="filled"
+          classNameButton="rounded-1 bg-[#34cdc8] font-bold"
+        />
+      <NavButton
           linkTo="/register/specialist"
           textButton="Registro Especialista"
           variantButton="outlined"
           classNameButton="border-[#128e8f] rounded-1 bg-[#cef9f4] text-[#128e8f] font-bold"
         />
         <NavButton
-          linkTo="register/user"
+          linkTo="/register/user"
           textButton="Registra Paciente"
           variantButton="filled"
           classNameButton="rounded-1 bg-[#34cdc8] font-bold"
