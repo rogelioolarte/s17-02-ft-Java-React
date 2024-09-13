@@ -142,10 +142,10 @@ Para consultas o soporte, contacta al equipo a través de [tu_email@dominio.com]
 Las imágenes Docker están disponibles en [Docker Hub](https://hub.docker.com/repository/docker/nombre_usuario/backend) y [Docker Hub](https://hub.docker.com/repository/docker/nombre_usuario/frontend).
 
 ---
-
 Este README incluye información sobre cómo construir y ejecutar los contenedores Docker, además de proporcionar enlaces a Docker Hub donde se pueden encontrar las imágenes del proyecto. Asegúrate de actualizar los enlaces y nombres según los detalles específicos de tu proyecto.
 
-## Repositorio Principal
+## Nota
 Este es un repositorio paralelo con de el fin extender y emplear una aplicación web frontend diferente.
-# Repositorio Principal
+
+## Repositorio Principal
 https://github.com/No-Country-simulation/S17-02-ft-Java-React
