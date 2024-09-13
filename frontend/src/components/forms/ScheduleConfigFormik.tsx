@@ -67,9 +67,11 @@ const scheduleConfigSchema = Yup.object().shape({
     .required('La hora de fin de descanso es obligatoria'),
   timeBooking: Yup.number()
     .positive('La duración de trabajo debe ser positiva')
+    .integer('La duración debe ser un número entero')
     .required('La duración de trabajo es obligatoria'),
   timeBookingRest: Yup.number()
     .positive('La duración del descanso debe ser positiva')
+    .integer('La duración debe ser un número entero')
     .required('La duración del descanso es obligatoria'),
   selectedDays: Yup.array()
     .of(Yup.string())
