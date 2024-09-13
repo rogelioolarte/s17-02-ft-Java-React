@@ -1,6 +1,7 @@
-import { IconButton, Navbar, Typography } from "@material-tailwind/react";
+import { Navbar, Typography } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import NavButton from "../pure/NavButton";
+import Doctor from "../../assets/icons/services/doctor.svg"
 
 function NavList() {
 
@@ -30,13 +31,11 @@ function NavList() {
 
 export default function NavBar() {
   return (
-    <Navbar shadow={false} blurred={false} className="flex mx-auto py-1 border-b-2 rounded-none h-[5%]">
+    <Navbar shadow={false} blurred={false} className="flex mx-auto -py-1 border-b-2 rounded-none max-h-[5%]">
       <div className="flex flex-col md:flex-row items-center justify-between w-full text-blue-gray-900">
         <Link to="/" className="mx-4">
-          <Typography variant="h5" className=" flex gap-2 place-items-center cursor-pointer py-1.5 px-10 border border-[#34cdc8] rounded-lg">
-            <IconButton size="md"  className="h-9 w-9 p-0" variant="text">
-              <Typography variant="h5" className="p-0">H</Typography>
-            </IconButton>
+          <Typography variant="h5" className=" flex gap-2 place-items-center cursor-pointer py-1 px-7 border border-[#34cdc8] rounded-lg">
+            <img src={Doctor} className="h-8 w-8 p-0" />
             HeyDoc!
           </Typography>
         </Link>
