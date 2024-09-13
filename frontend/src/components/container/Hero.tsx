@@ -15,9 +15,9 @@ const specialists = [
 
 const Hero = () => {
   return (
-    <div className="min-h-[40rem] p-8 md:p-16 bg-gradient-to-b from-[#CEF9F4] to-[#34CDC8] w-full">
-        <Typography className="text-center text-primary-dark 
-            text-[3.1rem] font-bold uppercase mx-auto text-[#062a2d] " >
+    <div className="min-h-[40rem] p-8 md:p-16 bg-gradient-to-b from-[#CEF9F4] to-[#34CDC8] min-w-full">
+        <Typography variant="h1" className="text-center text-primary-dark 
+            font-bold uppercase mx-auto text-[#062a2d] " >
           Conecta inmediatamente con los especialistas
         </Typography>
       <div className="flex flex-wrap justify-center gap-3 mt-10">
