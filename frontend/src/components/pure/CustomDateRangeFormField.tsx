@@ -37,8 +37,8 @@ import {
     fieldNameTo,
     labelFrom,
     labelTo,
-    placeholderFrom = "Fecha de inicio",
-    placeholderTo = "Fecha de fin",
+    placeholderFrom = "",
+    placeholderTo = "",
     disabled
   }: CustomDateRangeFormFieldProps) {
     return (

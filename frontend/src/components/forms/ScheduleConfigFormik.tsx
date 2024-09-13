@@ -1,241 +1,252 @@
-import { Button, Checkbox } from '@material-tailwind/react';
+import { Formik, Field, Form, FormikHelpers } from 'formik';
+import * as Yup from 'yup';
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  Typography,
+  Button,
+} from '@material-tailwind/react';
+import CustomFormField from '../pure/CustomFormField';
+import CustomDateRangeFormField from '../pure/CustomDateRangeFormField';
+import { CustomChip } from '../pure/CustomChip';
 import { format } from 'date-fns';
-import React, { useState } from 'react';
-import DatePicker from 'react-datepicker'; // eliminar libreria
-import 'react-datepicker/dist/react-datepicker.css';
 
-const DAYS_OF_WEEK = [
-  'MONDAY',
-  'TUESDAY',
-  'WEDNESDAY',
-  'THURSDAY',
-  'FRIDAY',
-  'SATURDAY',
-  'SUNDAY',
+interface ScheduleConfigFormValues {
+  startDate: Date;
+  endDate: Date;
+  startTime: string;
+  endTime: string;
+  startRestTime: string;
+  endRestTime: string;
+  timeBooking: number;// deben ser minutos? entonces usar enteros
+  timeBookingRest: number;
+  selectedDays: string[];
+}
+
+const scheduleConfigSchema = Yup.object().shape({
+  startDate: Yup.date()
+    .min(new Date(), 'La fecha inicial debe ser después de hoy')
+    .required('La fecha inicial es obligatoria'),
+  endDate: Yup.date()
+    .min(Yup.ref('startDate'), 'La fecha final debe ser posterior a la inicial')
+    .required('La fecha final es obligatoria'),
+  startTime: Yup.string()
+    .matches(/^([01]\d|2[0-3]):([0-5]\d)$/, 'La hora debe estar en formato HH:mm')
+    .test('min-start-time', 'La hora de inicio debe ser al menos 00:00', value => {
+      return value ? new Date(`1970-01-01T${value}:00`) >= new Date('1970-01-01T00:00:00') : false;
+    })
+    .required('La hora inicial es obligatoria'),
+  endTime: Yup.string()
+    .matches(/^([01]\d|2[0-3]):([0-5]\d)$/, 'La hora debe estar en formato HH:mm')
+    .test('max-end-time', 'La hora de fin debe ser máximo a las 24:00', value => {
+      return value ? new Date(`1970-01-01T${value}:00`) <= new Date('1970-01-01T24:00:00') : false;
+    })
+    .test('is-after-start-time', 'La hora de fin debe ser después de la hora de inicio', function (value) {
+      const { startTime } = this.parent;
+      return startTime && value ? new Date(`1970-01-01T${value}:00`) > new Date(`1970-01-01T${startTime}:00`) : false;
+    })
+    .required('La hora final es obligatoria'),
+  startRestTime: Yup.string()
+    .matches(/^([01]\d|2[0-3]):([0-5]\d)$/, 'La hora debe estar en formato HH:mm')
+    .test('is-after-start-time', 'La hora de descanso debe ser después de la hora de inicio de trabajo', function (value) {
+      const { startTime } = this.parent;
+      return startTime && value ? new Date(`1970-01-01T${value}:00`) > new Date(`1970-01-01T${startTime}:00`) : false;
+    })
+    .required('La hora de inicio de descanso es obligatoria'),
+  endRestTime: Yup.string()
+    .matches(/^([01]\d|2[0-3]):([0-5]\d)$/, 'La hora debe estar en formato HH:mm')
+    .test('is-after-start-rest-time', 'La hora de fin de descanso debe ser después de la hora de inicio de descanso', function (value) {
+      const { startRestTime } = this.parent;
+      return startRestTime && value ? new Date(`1970-01-01T${value}:00`) > new Date(`1970-01-01T${startRestTime}:00`) : false;
+    })
+    .test('is-before-end-time', 'La hora de fin de descanso debe ser antes de la hora de fin de trabajo', function (value) {
+      const { endTime } = this.parent;
+      return endTime && value ? new Date(`1970-01-01T${value}:00`) < new Date(`1970-01-01T${endTime}:00`) : false;
+    })
+    .required('La hora de fin de descanso es obligatoria'),
+  timeBooking: Yup.number()
+    .positive('La duración de trabajo debe ser positiva')
+    .required('La duración de trabajo es obligatoria'),
+  timeBookingRest: Yup.number()
+    .positive('La duración del descanso debe ser positiva')
+    .required('La duración del descanso es obligatoria'),
+  selectedDays: Yup.array()
+    .of(Yup.string())
+    .min(1, 'Debes seleccionar al menos un día')
+    .required('Debes seleccionar al menos un día'),
+});
+
+const days = [
+  { name: 'Lunes', value: 'MONDAY' },
+  { name: 'Martes', value: 'TUESDAY' },
+  { name: 'Miércoles', value: 'WEDNESDAY' },
+  { name: 'Jueves', value: 'THURSDAY' },
+  { name: 'Viernes', value: 'FRIDAY' },
+  { name: 'Sábado', value: 'SATURDAY' },
+  { name: 'Domingo', value: 'SUNDAY' },
 ];
 
+const formatDay = (date: Date) => format(date, 'yyyy-MM-dd');
+/* const formattedTime = (date: Date) => format(date, 'HH:mm:ss'); */
+
+const formattedValues = ({
+  startDate,
+  endDate,
+  startTime,
+  endTime,
+  startRestTime,
+  endRestTime,
+  timeBooking,
+  timeBookingRest,
+  selectedDays,
+}: ScheduleConfigFormValues) => {
+  return {
+    startDate: formatDay(startDate),
+    endDate: formatDay(endDate),
+    startTime: (startTime).concat(':00'),
+    endTime: (endTime).concat(':00'),
+    startRestTime: (startRestTime).concat(':00'),
+    endRestTime: (endRestTime).concat(':00'),
+    timeBooking,
+    timeBookingRest,
+    selectedDays,
+  };
+};
+
 export default function ScheduleConfigFormik() {
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
-  const [startTime, setStartTime] = useState<Date | null>(null);
-  const [endTime, setEndTime] = useState<Date | null>(null);
-  const [startRest, setStartRest] = useState<Date | null>(null);
-  const [endRest, setEndRest] = useState<Date | null>(null);
-  const [selectedDays, setSelectedDays] = useState<string[]>([]);
-  const [timeBooking, setTimeBooking] = useState<string | null>(null);
-  const [timeBookingRest, setTimeBookingRest] = useState<string | null>(null);
-  const today = new Date();
-
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setSelectedDays((prev) =>
-      prev.includes(value)
-        ? prev.filter((day) => day !== value)
-        : [...prev, value]
-    );
+  const initialCredentials: ScheduleConfigFormValues = {
+    startDate: new Date(),
+    endDate: new Date(),
+    startTime: "00:00:00",
+    endTime: "00:00:00",
+    startRestTime: "00:00:00",
+    endRestTime: "00:00:00",
+    timeBooking: 0,
+    timeBookingRest: 0,
+    selectedDays: [],
   };
+
+  const handleSubmit = async (
+    values: ScheduleConfigFormValues,
+    { setSubmitting }: FormikHelpers<ScheduleConfigFormValues>
+  ) => {
+    setSubmitting(false);
+    console.log(formattedValues(values));
+  };
+
   
-  /// revisar
-  const formatDay = (date: Date) => (date ? format(date, 'yyyy-MM-dd') : '');
 
-  const formattedTime = (date: Date) => format(date, 'HH:mm:ss');
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const isValid = [
-      startDate,
-      endDate,
-      startTime,
-      endTime,
-      startRest,
-      endRest,
-      timeBooking,
-      timeBookingRest,
-    ].every(Boolean);
-
-    if (isValid) {
-      const schedulesConfig = {
-        schedulesDayStart: formatDay(startDate!),
-        schedulesDayEnd: formatDay(endDate!),
-        schedulesStart: formattedTime(startTime!),
-        schedulesEnd: formattedTime(endTime!),
-        schedulesStartRest: formattedTime(startRest!),
-        schedulesEndRest: formattedTime(endRest!),
-        schedulesDuration: timeBooking,
-        schedulesRest: timeBookingRest,
-        days: selectedDays,
-      };
-
-      console.log(schedulesConfig);
-    }
-  };
   return (
-    <div className='max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg'>
-      <h2 className='text-xl font-semibold mb-4'>Configuración de Horarios</h2>
-      <form onSubmit={handleSubmit}>
-        <div className='mb-4'>
-          <label
-            htmlFor='schedulesDayStart'
-            className='block text-sm font-medium text-gray-700'>
-            Fecha de Inicio
-          </label>
-          {endDate ? (
-            <>
-              <DatePicker
-                selected={startDate}
-                onChange={(date) => setStartDate(date)}
-                minDate={today}
-                maxDate={endDate}
-                dateFormat='yyyy-MM-dd'
-                className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50'
-              />
-            </>
-          ) : (
-            <>
-              <DatePicker
-                selected={startDate}
-                onChange={(date) => setStartDate(date)}
-                minDate={today}
-                dateFormat='yyyy-MM-dd'
-                className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50'
-              />
-            </>
-          )}
-        </div>
-        <div className='mb-4'>
-          <label
-            htmlFor='schedulesDayEnd'
-            className='block text-sm font-medium text-gray-700'>
-            Fecha de Fin
-          </label>
-          <DatePicker
-            selected={endDate}
-            onChange={(date) => setEndDate(date)}
-            minDate={startDate ? startDate : today}
-            dateFormat='yyyy-MM-dd'
-            className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50'
-          />
-        </div>
-        <div className='mb-4'>
-          <label
-            htmlFor='schedulesStart'
-            className='block text-sm font-medium text-gray-700'>
-            Hora de Inicio
-          </label>
-          <DatePicker
-            selected={startTime}
-            onChange={(date) => setStartTime(date!)}
-            showTimeSelect
-            showTimeSelectOnly
-            timeIntervals={30}
-            timeCaption='Time'
-            dateFormat='h:mm aa'
-            className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50'
-          />
-        </div>
-        <div className='mb-4'>
-          <label
-            htmlFor='schedulesEnd'
-            className='block text-sm font-medium text-gray-700'>
-            Hora de Fin
-          </label>
-          <DatePicker
-            selected={endTime}
-            onChange={(date) => setEndTime(date!)}
-            showTimeSelect
-            showTimeSelectOnly
-            timeIntervals={30}
-            timeCaption='Time'
-            dateFormat='h:mm aa'
-            className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50'
-          />
-        </div>
-        <div className='mb-4'>
-          <label
-            htmlFor='schedulesStartRest'
-            className='block text-sm font-medium text-gray-700'>
-            Hora de Inicio Descanso
-          </label>
-          <DatePicker
-            selected={startRest}
-            onChange={(date) => setStartRest(date!)}
-            showTimeSelect
-            showTimeSelectOnly
-            timeIntervals={60}
-            timeCaption='Time'
-            dateFormat='h:mm aa'
-            className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50'
-          />
-        </div>
-        <div className='mb-4'>
-          <label
-            htmlFor='schedulesEndRest'
-            className='block text-sm font-medium text-gray-700'>
-            Hora de Fin Descanso
-          </label>
-          <DatePicker
-            selected={endRest}
-            onChange={(date) => setEndRest(date!)}
-            showTimeSelect
-            showTimeSelectOnly
-            timeIntervals={60}
-            timeCaption='Time'
-            dateFormat='h:mm aa'
-            className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50'
-          />
-        </div>
-        <div className='mb-4'>
-          <label
-            htmlFor='schedulesDuration'
-            className='block text-sm font-medium text-gray-700'>
-            Duración (minutos)
-          </label>
-          <input
-            type='number'
-            id='schedulesDuration'
-            value={timeBooking ? timeBooking : ''}
-            onChange={(e) => setTimeBooking(e.target.value)}
-            className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50'
-          />
-        </div>
-        <div className='mb-4'>
-          <label
-            htmlFor='schedulesRest'
-            className='block text-sm font-medium text-gray-700'>
-            Descanso (minutos)
-          </label>
-          <input
-            type='number'
-            id='schedulesRest'
-            value={timeBookingRest ? timeBookingRest : ''}
-            onChange={(e) => setTimeBookingRest(e.target.value)}
-            className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50'
-          />
-        </div>
-        <div className='mb-4'>
-          <label className='block text-sm font-medium text-gray-700'>
-            Días
-          </label>
-          <div className='flex flex-wrap space-x-4'>
-            {DAYS_OF_WEEK.map((day) => (
-              <label key={day}>
-                <Checkbox
-                  crossOrigin=''
-                  value={day}
-                  checked={selectedDays.includes(day)}
-                  onChange={handleCheckboxChange}
+    <div className="w-full md:w-1/2 max-h-[50%] grid justify-items-center px-4 py-8 mt-5">
+      <Typography className="text-center" variant="h4" color="black">
+        Configura tu Horario
+      </Typography>
+      <Formik
+        initialValues={initialCredentials}
+        validationSchema={scheduleConfigSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ touched, errors, values, setFieldValue }) => 
+          (<Form className="w-full grid justify-items-center mt-5">
+            <Card shadow={false} className=" bg-white w-full">
+              <CardBody className="flex flex-col gap-4">
+                {/* Campo Fecha Inicial y Final de Trabajo  */}
+                <CustomDateRangeFormField
+                  values={{ from: values.startDate, to: values.endDate }}
+                  setFieldValue={setFieldValue}
+                  touched={touched}
+                  errors={errors}
+                  fieldNameFrom="startDate"
+                  fieldNameTo="endDate"
+                  placeholderFrom="Fecha de Inicio"
+                  placeholderTo="Fecha de Fin de trabajo"
+                  labelFrom="Fecha de Inicio"
+                  labelTo="Fecha de Fin de trabajo"
+                  disabled={{ before: new Date() }}
                 />
-                {day.charAt(0).toUpperCase() + day.slice(1).toLowerCase()}
-              </label>
-            ))}
-          </div>
-        </div>
-        <Button
-          type='submit'
-          className='w-full bg-blue-500 text-white hover:bg-blue-600'>
-          Guardar
-        </Button>
-      </form>
+
+                {/* Campo Hora Inicial y Fin de trabajo */}
+                <div className="flex flex-row gap-2 place-content-center">
+                  <Field
+                    name="startTime"
+                    component={CustomFormField}
+                    placeholder="Hora de Inicio de trabajo"
+                    label="Hora de Inicio de trabajo"
+                    type="time"
+                  />
+                  <Field
+                    name="endTime"
+                    component={CustomFormField}
+                    placeholder="Hora de Fin de trabajo"
+                    label="Hora de Fin de trabajo"
+                    type="time"
+                  />
+                </div>
+                {/* Campo Hora Inicial y Fin de descanso */}
+                <div className="flex flex-row gap-2 place-content-center">
+                  <Field
+                    name="startRestTime"
+                    component={CustomFormField}
+                    placeholder="Hora de Inicio de descanso"
+                    label="Hora de Inicio de descanso"
+                    type="time"
+                  />
+                  <Field
+                    name="endRestTime"
+                    component={CustomFormField}
+                    placeholder="Hora de Fin de descanso"
+                    label="Hora de Fin de descanso"
+                    type="time"
+                  />
+                </div>
+
+                {/* Campo Duración de trabajo y descanso */}
+                <div className="flex flex-row gap-2 place-content-center">
+                  <Field
+                    name="timeBooking"
+                    component={CustomFormField}
+                    placeholder="Duración trabajo (min)"
+                    label="Duración de trabajo (min)"
+                    type="number"
+                  />
+                  <Field
+                    name="timeBookingRest"
+                    component={CustomFormField}
+                    placeholder="Duración descanso (min)"
+                    label="Duración de descanso (min)"
+                    type="number"
+                  />
+                </div>
+
+                {/* Campo de días de trabajo */}
+                <Typography className="-mb-3">Selecciona los días de trabajo</Typography>
+                <div className="flex flex-row gap-2 place-content-center">
+                  {days.map((day) => (
+                    <CustomChip
+                      key={day.value}
+                      value={day}
+                      setFieldValue={setFieldValue}
+                      selectedDays={values.selectedDays}
+                    />
+                  ))}
+                </div>
+
+              </CardBody>
+              <CardFooter className="pt-0">
+                <Button
+                  variant="gradient"
+                  fullWidth
+                  type="submit"
+                  className="mb-4"
+                >
+                  Establer horario de trabajo
+                </Button>
+              </CardFooter>
+            </Card>
+          </Form>)
+        }
+      </Formik>
     </div>
   );
 }

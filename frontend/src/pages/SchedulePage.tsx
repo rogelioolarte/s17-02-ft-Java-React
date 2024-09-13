@@ -1,9 +1,9 @@
-import ScheduleFormik from '../components/forms/ScheduleFormik';
+import ScheduleConfigFormik from '../components/forms/ScheduleConfigFormik';
 
 export default function SchedulePage() {
   return( 
     <div className='flex justify-center w-full'>
-      <ScheduleFormik />
+      <ScheduleConfigFormik />
     </div>
     )
 }
