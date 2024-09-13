@@ -10,6 +10,8 @@ import {
   Square2StackIcon,
   Cog6ToothIcon,
   HomeIcon,
+  AdjustmentsHorizontalIcon,
+  UserCircleIcon,
 } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 
@@ -29,24 +31,22 @@ function SidebarLight() {
       </Link>
       <hr className="my-2 border-gray-200" />
       <List>
-        <ListItem className={LIST_ITEM_STYLES}>
-          <ListItemPrefix>
-            <Square2StackIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Dashboard
-        </ListItem>
-        <ListItem className={LIST_ITEM_STYLES}>
-          <ListItemPrefix>
-            <Square2StackIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Products
-        </ListItem>
-        <ListItem className={LIST_ITEM_STYLES}>
-          <ListItemPrefix>
-            <TicketIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Orders
-        </ListItem>
+        <Link to="/dashboard">
+          <ListItem className={LIST_ITEM_STYLES}>
+            <ListItemPrefix>
+              <AdjustmentsHorizontalIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Dashboard
+          </ListItem>
+        </Link>
+        <Link to="/">
+          <ListItem className={LIST_ITEM_STYLES}>
+            <ListItemPrefix>
+              <UserCircleIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Pacientes
+          </ListItem>
+        </Link>
         <Link to="/schedule">
           <ListItem className={LIST_ITEM_STYLES}>
             <ListItemPrefix>
