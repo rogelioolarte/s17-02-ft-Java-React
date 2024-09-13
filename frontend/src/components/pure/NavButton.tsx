@@ -11,7 +11,7 @@ export default function NavButton({
 }: NavButtonProps) {
   return (
     <Link to={linkTo} >
-      <Button variant={variantButton} onClick={onClicked} size="sm" className={classNameButton}>
+      <Button variant={variantButton} onClick={onClicked} size="sm" fullWidth className={classNameButton}>
         <Typography variant="small" className="px-1 font-medium">
           <span className="flex items-center">{textButton}</span>
         </Typography>

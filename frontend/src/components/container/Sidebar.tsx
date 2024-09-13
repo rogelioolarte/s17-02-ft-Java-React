@@ -6,14 +6,18 @@ import {
   ListItemPrefix,
 } from "@material-tailwind/react";
 import {
-  Cog6ToothIcon,
   HomeIcon,
   AdjustmentsHorizontalIcon,
   UserCircleIcon,
+  ArrowRightEndOnRectangleIcon,
+  Cog8ToothIcon,
 } from "@heroicons/react/24/solid";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useUserActions } from "../../hooks/useUserActions";
 
 function SidebarLight() {
+  const { user, useResetUser } = useUserActions()
+  const navigate = useNavigate()
   const LIST_ITEM_STYLES =
     "select-none hover:bg-gray-100 focus:bg-gray-100 active:bg-gray-100 hover:text-gray-900 focus:text-gray-900 active:text-gray-900 data-[selected=true]:text-gray-900";
 
@@ -48,11 +52,24 @@ function SidebarLight() {
         <Link to="/schedule">
           <ListItem className={LIST_ITEM_STYLES}>
             <ListItemPrefix>
-              <Cog6ToothIcon className="h-5 w-5" />
+              <Cog8ToothIcon className="h-5 w-5" />
             </ListItemPrefix>
             Configura tu Horario
           </ListItem>
         </Link>
+        { user.token ?
+          <ListItem className={LIST_ITEM_STYLES} 
+            onClick={() => {
+              useResetUser()
+              navigate("/")
+            }}>
+            <ListItemPrefix>
+              <ArrowRightEndOnRectangleIcon className="h-5 w-5" />
+            </ListItemPrefix>
+              Cerrar Sesión
+          </ListItem> : null
+        }
+        
       </List>
     </Card>
   );

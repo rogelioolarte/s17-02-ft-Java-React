@@ -38,7 +38,7 @@ const registerSchema = Yup.object().shape({
 
 
 export default function RegisterFormik({ type }: { type: string }) {
-  const { useSetUser } = useUserActions()
+  const { user, useSetUser } = useUserActions()
   const navigate = useNavigate()
 
   const initialCredentials: RegisterFormValues = {
@@ -53,7 +53,11 @@ export default function RegisterFormik({ type }: { type: string }) {
     const response = await register(values.email, values.password, type)
     if(isValidUser(response)){
       useSetUser(response)
-      navigate("/")
+      if(user.token !== ""){
+        navigate("/home")
+      } else {
+        navigate("/")
+      }
     }
   };
 

@@ -32,7 +32,7 @@ const loginSchema = Yup.object().shape({
 });
 
 export default function LoginFormik() {
-  const { useSetUser } = useUserActions();
+  const { user, useSetUser } = useUserActions();
   const navigate = useNavigate()
 
   const initialCredentials: LoginFormValues = {
@@ -46,7 +46,11 @@ export default function LoginFormik() {
     const response = await login(values.email, values.password);
     if (isValidUser(response)) {
       useSetUser(response);
-      navigate("/")
+      if(user.token !== ""){
+        navigate("/home")
+      } else {
+        navigate("/")
+      }
     }
   };
 
