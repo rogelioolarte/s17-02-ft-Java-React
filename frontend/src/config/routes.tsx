@@ -2,6 +2,7 @@ import App from '../App';
 import Appp from '../Appp';
 import { TableWithSearch } from '../components/container/TableWithSearch';
 import AboutPage from '../pages/AboutPage';
+import DashBoardPage from '../pages/DashBoardPage';
 import HomePage from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
 import NotFoundPage from '../pages/NotFoundPage';
@@ -19,12 +20,12 @@ const routes = [
       { path: '/login', element: <LoginPage /> },
       { path: '/search', element: <TableWithSearch /> },
       { path: '/register/:type', element: <RegisterPage /> },
-      
       {
         path: '/',
         element: <Appp />,
         children: [
           { path: '/protected', element: <Protectedpage /> },
+          { path: '/dashboard', element: <DashBoardPage /> },
           { path: '/schedule', element: <SchedulePage /> },
         ],
       },
