@@ -140,7 +140,7 @@ export default function ScheduleConfigFormik() {
   
 
   return (
-    <div className="w-full md:w-1/2 max-h-[50%] grid justify-items-center justify-self-center justify-center px-4 py-8 mt-5">
+    <div className="w-full md:w-1/2 max-h-full grid justify-items-center justify-self-center justify-center px-4 py-3 mt-2">
       <Typography className="text-center" variant="h4" color="black">
         Configura tu Horario de Trabajo
       </Typography>
