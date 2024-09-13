@@ -6,8 +6,6 @@ import {
   ListItemPrefix,
 } from "@material-tailwind/react";
 import {
-  TicketIcon,
-  Square2StackIcon,
   Cog6ToothIcon,
   HomeIcon,
   AdjustmentsHorizontalIcon,
