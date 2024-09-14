@@ -16,15 +16,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { useUserActions } from "../../hooks/useUserActions";
 import { BookOpenIcon, CalendarDateRangeIcon } from "@heroicons/react/24/outline";
 
-function SidebarLight() {
+export function Sidebar() {
   const { user, useResetUser } = useUserActions()
   const navigate = useNavigate()
   const LIST_ITEM_STYLES =
     "select-none hover:bg-gray-100 focus:bg-gray-100 active:bg-gray-100 hover:text-gray-900 focus:text-gray-900 active:text-gray-900 data-[selected=true]:text-gray-900";
 
   return (
-    <div className="max-w-[17rem] min-h-full">
-      <Card className="max-w-[17rem] min-h-full mx-auto p-6 shadow-md flex">
+    <div className="max-w-[17rem] min-h-screen">
+      <Card shadow={false} className="max-w-[17rem] min-h-screen mx-auto p-6 shadow-md flex">
       <Link to ="/home">
         <div className="mb-2 flex items-center gap-4 p-4">
           <HomeIcon className="h-5 w-5" />
@@ -91,15 +91,6 @@ function SidebarLight() {
       </List>
     </Card>
     </div>
-    
-  );
-}
-
-export function Sidebar() {
-  return (
-    <section className="flex place-items-center h-full">
-      <SidebarLight />
-    </section>
   );
 }
 
