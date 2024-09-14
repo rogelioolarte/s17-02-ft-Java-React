@@ -1,22 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import apiClient from '../config/apiClient';
+import instance from '../config/axiosConfig';
 import { ROUTE_CLINICAL_RECORDS } from '../config/routes_api';
 import { DEFAULT_STATE } from "../store/userSlice";
-import { toast } from 'sonner'
+import { managedCatchError } from './authService';
 
 export const getClinicalRecords = async(): Promise<any> => {
     try {
-        const response = await apiClient.post(ROUTE_CLINICAL_RECORDS, {
-            
-        });
+        const response = await instance.get(ROUTE_CLINICAL_RECORDS);
         return response.data
     } catch (error: any) {
-        if (error.response && error.response.status === 400) {
-            toast.error(error.response.data.message || "Error en la solicitud", 
-                { duration: 2000, closeButton: true });
-        } else {
-            toast.error("Ocurrió un error inesperado", { duration: 2000, closeButton: true });
-        }
+        managedCatchError(error)
     }
     return DEFAULT_STATE
 }

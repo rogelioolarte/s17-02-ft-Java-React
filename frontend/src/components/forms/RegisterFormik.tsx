@@ -12,6 +12,7 @@ import { register } from '../../services/authService';
 import { useUserActions } from '../../hooks/useUserActions';
 import { isValidUser } from '../../store/userSlice';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 // Definir tipos para los valores del formulario
 interface RegisterFormValues {
@@ -23,11 +24,14 @@ interface RegisterFormValues {
 // Esquema de validación usando Yup
 const registerSchema = Yup.object().shape({
   email: Yup.string()
+    .min(7, 'El correo electrónico no puede tener menos de 7 caracteres')
+    .max(40, 'El correo electrónico no puede tener más de 40 caracteres')
     .email('Formato de correo inválido')
     .required('El correo electrónico es obligatorio'),
   password: Yup.string()
     .required('La contraseña es obligatoria')
     .min(8, "La contraseña debe tener al menos 8 caracteres")
+    .max(40, 'El contraseña no puede tener más de 50 caracteres')
     .matches(/[a-zA-Z]/, "La contraseña debe contener letras")
     .matches(/[0-9]/, "La contraseña debe contener números"),
   confirmPassword: Yup.string()
@@ -50,6 +54,7 @@ export default function RegisterFormik({ type }: { type: string }) {
   const handleSubmit = async(values: RegisterFormValues, 
       { setSubmitting }: FormikHelpers<RegisterFormValues>) => {
     setSubmitting(false)
+    toast.success('Registrandose...', { duration: 3000, closeButton: true })
     const response = await register(values.email, values.password, type)
     if(isValidUser(response)){
       useSetUser(response)

@@ -7,7 +7,17 @@ export const DEFAULT_STATE: User = {
   roleName: "",
   roleId: "",
   userId: "",
-  username: ""
+  username: "",
+  email: "",
+  profileId: "",
+  profileName: "",
+  profileLastname: "",
+  documentType: "",
+  documentNumber: "",
+  avatarUrl: "",
+  birth: "",
+  address: "",
+  cityName: "",
 }
 
 const expectedUserStateKeys = ['token', 'roleName', 'roleId', 'userId','username'];

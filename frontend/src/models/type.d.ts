@@ -3,7 +3,17 @@ export interface User {
     roleName: string,
     roleId: string,
     userId: string,
-    username: string
+    username: string,
+    email?: string,
+    profileId?: string,
+    profileName?: string,
+    profileLastname?: string,
+    documentType?: string,
+    documentNumber?: string,
+    avatarUrl?: string,
+    birth?: string,
+    address?: string,
+    cityName?: string,
 }
 
 export interface Department {
@@ -15,14 +25,4 @@ export interface Department {
 export interface City {
     cityId: number,
     cityName: string
-}
-
-import { variant } from "@material-tailwind/react/types/components/button";
-
-export interface NavButtonProps {
-    linkTo?: string;
-    textButton: string;
-    variantButton: variant;
-    classNameButton?: string;
-    onClicked?: function;
 }

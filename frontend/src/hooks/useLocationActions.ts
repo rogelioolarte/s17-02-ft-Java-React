@@ -2,7 +2,7 @@ import { Department } from '../models/type'
 import { initLocations, resetLocations } from '../store/locationSlice'
 import { useAppDispatch, useAppSelector } from './store'
   
-  export const useItemsActions = () => {
+  export const useLocationActions = () => {
     const locations = useAppSelector(state => state.locations)
     const dispatch = useAppDispatch()
   

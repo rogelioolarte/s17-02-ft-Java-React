@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from './store'
 import { resetUser, setUser } from '../store/userSlice'
+import { resetLocations } from '../store/locationSlice'
 import { User } from '../models/type'
 
 export const useUserActions = () => {
@@ -18,6 +19,7 @@ export const useUserActions = () => {
    * This method reset the User
    */
   const useResetUser = () => {
+    dispatch(resetLocations())
     dispatch(resetUser())
     
   }

@@ -12,6 +12,7 @@ import { login } from '../../services/authService'; // Suponiendo que existe un 
 import { useUserActions } from '../../hooks/useUserActions';
 import { isValidUser } from '../../store/userSlice';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 // Definir tipos para los valores del formulario
 interface LoginFormValues {
@@ -23,10 +24,13 @@ interface LoginFormValues {
 const loginSchema = Yup.object().shape({
   email: Yup.string()
     .email('Formato de correo inválido')
+    .min(7, 'El correo electrónico no puede tener menos de 7 caracteres')
+    .max(40, 'El correo electrónico no puede tener más de 40 caracteres')
     .required('El correo electrónico es obligatorio'),
   password: Yup.string()
     .required('La contraseña es obligatoria')
     .min(8, "La contraseña debe tener al menos 8 caracteres")
+    .max(40, 'El contraseña no puede tener más de 50 caracteres')
     .matches(/[a-zA-Z]/, "La contraseña debe contener letras")
     .matches(/[0-9]/, "La contraseña debe contener números"),
 });
@@ -43,6 +47,7 @@ export default function LoginFormik() {
   const handleSubmit = async (values: LoginFormValues, 
       { setSubmitting }: FormikHelpers<LoginFormValues>) => {
     setSubmitting(false);
+    toast.success('Iniciando sesión...', { duration: 3000, closeButton: true })
     const response = await login(values.email, values.password);
     if (isValidUser(response)) {
       useSetUser(response)

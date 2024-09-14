@@ -19,7 +19,7 @@ interface ScheduleConfigFormValues {
   endTime: string;
   startRestTime: string;
   endRestTime: string;
-  timeBooking: number;// deben ser minutos? entonces usar enteros
+  timeBooking: number;
   timeBookingRest: number;
   selectedDays: string[];
 }

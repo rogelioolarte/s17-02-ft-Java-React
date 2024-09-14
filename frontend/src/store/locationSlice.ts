@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { Department } from '../models/type';
 
-const DEFAULT_STATE: Department[] = []
+export const DEFAULT_STATE_LOCATION: Department[] = []
 
 export const DEFAULT_ITEM: Department = { 
     departmentId: 0,
@@ -10,14 +10,14 @@ export const DEFAULT_ITEM: Department = {
     cities: []
 }
 
-const isValidLocation = (state: any): state is Department => {
-  return Object.keys(DEFAULT_STATE).every(key => key in state);
+export const isValidLocation = (state: Department[]): state is Department[] => {
+  return Object.keys(DEFAULT_STATE_LOCATION).every(key => key in state);
 };
 
 const initialState: Department[] = (() => {
   const persistedState = window.localStorage.getItem('session_state')
   return persistedState ? (isValidLocation(JSON.parse(persistedState).locations) ? 
-    JSON.parse(persistedState).locations: DEFAULT_STATE) : DEFAULT_STATE
+    JSON.parse(persistedState).locations: DEFAULT_STATE_LOCATION) : DEFAULT_STATE_LOCATION
 })()
 
 export const locationSlice = createSlice({
@@ -28,7 +28,7 @@ export const locationSlice = createSlice({
       return [...action.payload]
     },
     resetLocations: () => {
-      return DEFAULT_STATE
+      return DEFAULT_STATE_LOCATION
     }
   }
 })
