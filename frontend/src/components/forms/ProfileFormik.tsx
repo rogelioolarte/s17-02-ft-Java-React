@@ -11,10 +11,11 @@ import CustomFormField from '../pure/CustomFormField';
 import { useLocationActions } from '../../hooks/useLocationActions';
 import { useState } from 'react';
 import { City, Department } from '../../models/type';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useUserActions } from '../../hooks/useUserActions';
+import { registerProfile, updateProfile } from '../../services/profileService';
+import { toast } from 'sonner';
 
-// Definir tipos para los valores del formulario
 interface ProfileFormValues {
   profileName: string;
   profileLastname: string;
@@ -40,8 +41,10 @@ const profileSchema = Yup.object().shape({
     .max(25, 'El número de documento no puede tener más de 25 dígitos')
     .required('El número de documento es obligatorio'),
   birth: Yup.date()
-    .max(new Date(new Date().setFullYear(new Date().getFullYear() - 150)),
-      'La fecha de nacimiento no puede ser hace más de 150 años')
+    .min(new Date(new Date().setFullYear(new Date().getFullYear() - 100)),
+      'La fecha de nacimiento no puede ser hace más de 100 años')
+    .max(new Date(new Date().setFullYear(new Date().getFullYear() - 18)),
+      'Debe ser mayor de 18 años')
     .required('La fecha de nacimiento es obligatoria'),
   address: Yup.string()
     .max(30, 'La dirección no puede tener más de 30 caracteres')
@@ -52,10 +55,11 @@ const profileSchema = Yup.object().shape({
     .required('La ciudad es obligatoria'),
 });
 
-export default function ProfileFormik() {
+export default function ProfileFormik({ type }: { type: string }) {
   const location = useLocation()
+  const navigate = useNavigate()
   const { locations } = useLocationActions();
-  const { user }  = useUserActions()
+  const { user, useSetProfile, useUpdateProfile }  = useUserActions()
   const [cities, setCities] = useState(locations.length > 0 ? locations[0].cities : []);
 
   const initialCredentials: ProfileFormValues = {
@@ -78,23 +82,35 @@ export default function ProfileFormik() {
     }
   };
 
-  const handleSubmit = (values: ProfileFormValues, { setSubmitting }: FormikHelpers<ProfileFormValues>) => {
-    const profileData = {
-      profileName: values.profileName,
-      profileLastname: values.profileLastname,
-      documentType: 'DNI',
-      documentNumber: values.documentNumber,
-      avatarUrl: '', 
-      birth: values.birth,
-      address: values.address,
-      city: {
-        cityId: values.cityId,
-      },
-      user : { userId: user.userId }
-    };
-
-    console.log(profileData);
+  const handleSubmit = async (values: ProfileFormValues,
+      { setSubmitting }: FormikHelpers<ProfileFormValues>) => {
+    const cityName = locations.find(d => d.departmentId === values.departmentId)?.
+      cities.find(c => c.cityId === values.cityId)?.cityName ?? ""
     setSubmitting(false);
+    
+    if(type === "register") {
+      toast.success('Creando Perfil...', { duration: 2000, closeButton: true })
+      const response = await registerProfile(
+        values.profileName, values.profileLastname, 'DNI',
+        values.documentNumber, '',  values.birth,
+        values.address, values.cityId, cityName, user.userId)
+      useSetProfile(response)
+      if(response.profileId !== ""){
+        if(location.state.fromRegister === "specialist") {
+          navigate("/register/check")
+        } else {
+          navigate("/home")
+        }
+      }
+    
+    } else if (type === "update") {
+      toast.success('Actualizando Perfil...', { duration: 2000, closeButton: true })
+      const response = await updateProfile(
+        values.profileName, values.profileLastname, 'DNI',
+        values.documentNumber, '',  values.birth,
+        values.address, values.cityId, cityName, user.userId)
+      useUpdateProfile(response)
+    }
   };
 
   return (

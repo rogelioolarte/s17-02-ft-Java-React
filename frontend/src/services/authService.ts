@@ -9,8 +9,11 @@ export const managedCatchError= (error: any) => {
     if (error.response && error.response.status >= 400) {
         toast.error(error.response.data.message || "Error en la solicitud", 
             { duration: 2000, closeButton: true });
-    } else {
-        console.log(error)
+    } else if (error.code === 'ECONNABORTED') {
+        toast.error("El servico se encuentra en suspensión. Visite el repositorio para mas información", 
+            { duration: 3000, closeButton: true });
+    } 
+    else {
         toast.error("Ocurrió un error inesperado", { duration: 2000, closeButton: true });
     }
 }

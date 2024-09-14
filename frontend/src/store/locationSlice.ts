@@ -10,13 +10,13 @@ export const DEFAULT_ITEM: Department = {
     cities: []
 }
 
-export const isValidLocation = (state: Department[]): state is Department[] => {
+export const isValidLocations = (state: Department[]): state is Department[] => {
   return Object.keys(DEFAULT_STATE_LOCATION).every(key => key in state);
 };
 
 const initialState: Department[] = (() => {
   const persistedState = window.localStorage.getItem('session_state')
-  return persistedState ? (isValidLocation(JSON.parse(persistedState).locations) ? 
+  return persistedState ? (isValidLocations(JSON.parse(persistedState).locations) ? 
     JSON.parse(persistedState).locations: DEFAULT_STATE_LOCATION) : DEFAULT_STATE_LOCATION
 })()
 

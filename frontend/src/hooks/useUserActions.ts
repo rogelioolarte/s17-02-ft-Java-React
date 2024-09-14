@@ -1,7 +1,9 @@
 import { useAppDispatch, useAppSelector } from './store'
-import { resetUser, setUser } from '../store/userSlice'
+import { resetUser, setUser, updateUser, setProfile,
+  updateProfile, setSpecialist, updateSpecialist } from '../store/userSlice'
 import { resetLocations } from '../store/locationSlice'
-import { User } from '../models/type'
+import { resetSpecialties } from '../store/specialtySlice'
+import { Profile, Specialist, User } from '../models/type'
 
 export const useUserActions = () => {
   const user: User = useAppSelector(state => state.user)
@@ -16,13 +18,55 @@ export const useUserActions = () => {
   }
 
   /**
+   * This method update a User in the Context
+   * @param {*} data This parameter required a User 
+   */
+  const useUpdateUser = (data: User) => {
+    dispatch(updateUser(data))
+  }
+
+  /**
+   * This method set a Profile in the Context
+   * @param {*} data This parameter required a Profile 
+   */
+  const useSetProfile = (data: Profile) => {
+    dispatch(setProfile(data))
+  }
+
+  /**
+   * This method update a Profile in the Context
+   * @param {*} data This parameter required a Profile 
+   */
+  const useUpdateProfile = (data: Profile) => {
+    dispatch(updateProfile(data))
+  }
+
+  /**
+   * This method set a Profile in the Context
+   * @param {*} data This parameter required a Profile 
+   */
+  const useSetSpecialist = (data: Specialist) => {
+    dispatch(setSpecialist(data))
+  }
+
+  /**
+   * This method update a Profile in the Context
+   * @param {*} data This parameter required a Profile 
+   */
+  const useUpdateSpecialist = (data: Specialist) => {
+    dispatch(updateSpecialist(data))
+  }
+
+  /**
    * This method reset the User
    */
   const useResetUser = () => {
+    dispatch(resetSpecialties())
     dispatch(resetLocations())
     dispatch(resetUser())
     
   }
 
-  return { useResetUser, useSetUser, user }
+  return { user, useResetUser, useSetUser, useUpdateUser,
+    useSetProfile, useUpdateProfile, useSetSpecialist, useUpdateSpecialist }
 }

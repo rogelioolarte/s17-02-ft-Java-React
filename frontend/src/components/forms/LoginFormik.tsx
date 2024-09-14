@@ -47,11 +47,13 @@ export default function LoginFormik() {
   const handleSubmit = async (values: LoginFormValues, 
       { setSubmitting }: FormikHelpers<LoginFormValues>) => {
     setSubmitting(false);
-    toast.success('Iniciando sesión...', { duration: 3000, closeButton: true })
+    toast.success('Iniciando sesión...', { duration: 2000, closeButton: true })
     const response = await login(values.email, values.password);
     if (isValidUser(response)) {
       useSetUser(response)
-      navigate("/home")
+      if(response.token !== ""){
+        navigate("/register/profile")
+      }
     }
   };
 

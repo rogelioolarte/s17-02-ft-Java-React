@@ -8,6 +8,7 @@ const getStore = async () => {
 
 const instance = axios.create({
   baseURL: MAIN_API,
+  timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
   },

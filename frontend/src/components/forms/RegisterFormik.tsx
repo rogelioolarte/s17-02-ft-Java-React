@@ -54,11 +54,13 @@ export default function RegisterFormik({ type }: { type: string }) {
   const handleSubmit = async(values: RegisterFormValues, 
       { setSubmitting }: FormikHelpers<RegisterFormValues>) => {
     setSubmitting(false)
-    toast.success('Registrandose...', { duration: 3000, closeButton: true })
+    toast.success('Registrandose...', { duration: 2000, closeButton: true })
     const response = await register(values.email, values.password, type)
     if(isValidUser(response)){
       useSetUser(response)
-      navigate("/home")
+      if(response.token !== ""){
+        navigate("/register/profile", { state: { fromRegister: type }} )
+      }
     }
   };
 

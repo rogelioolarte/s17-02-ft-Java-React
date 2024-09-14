@@ -8,7 +8,6 @@ import { managedCatchError } from './authService';
 export const getDepartments = async(): Promise<Department[]> => {
     try {
         const response = await instance.get(ROUTE_DEPARTMENT);
-        console.log(response)
         return response.data
     } catch (error: any) {
         managedCatchError(error)
