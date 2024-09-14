@@ -1,14 +1,14 @@
 import App from '../App';
 import Appp from '../Appp';
-import { TableWithSearch } from '../components/container/TableWithSearch';
 import AboutPage from '../pages/AboutPage';
-import DashBoardPage from '../pages/DashBoardPage';
 import HomePage from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
+import MedicalRecordPage from '../pages/MedicalRecordPage';
 import NotFoundPage from '../pages/NotFoundPage';
-import Protectedpage from '../pages/Protectedpage';
+import ProfilePage from '../pages/ProfilePage';
 import RegisterPage from '../pages/RegisterPage';
 import SchedulePage from '../pages/SchedulePage';
+import Shiftspage from '../pages/Shiftspage';
 
 const routes = [
   {
@@ -22,11 +22,11 @@ const routes = [
         path: '/',
         element: <Appp />,
         children: [
-          { path: '/protected', element: <Protectedpage /> },
           { path: '/home', element: <HomePage /> },
-          { path: '/dashboard', element: <DashBoardPage /> },
+          { path: '/shifts', element: <Shiftspage /> },
+          { path: '/patients', element: <MedicalRecordPage /> },
           { path: '/schedule', element: <SchedulePage /> },
-          { path: '/search', element: <TableWithSearch /> },
+          { path: '/profile', element: <ProfilePage /> },
         ],
       },
     ],

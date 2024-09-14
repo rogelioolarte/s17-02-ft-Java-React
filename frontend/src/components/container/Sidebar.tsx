@@ -14,6 +14,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { Link, useNavigate } from "react-router-dom";
 import { useUserActions } from "../../hooks/useUserActions";
+import { CalendarDateRangeIcon } from "@heroicons/react/24/outline";
 
 function SidebarLight() {
   const { user, useResetUser } = useUserActions()
@@ -22,7 +23,8 @@ function SidebarLight() {
     "select-none hover:bg-gray-100 focus:bg-gray-100 active:bg-gray-100 hover:text-gray-900 focus:text-gray-900 active:text-gray-900 data-[selected=true]:text-gray-900";
 
   return (
-    <Card className="max-w-[17rem] min-h-full mx-auto p-6 shadow-md">
+    <div className="max-w-[17rem] min-h-full">
+      <Card className="max-w-[17rem] min-h-full mx-auto p-6 shadow-md flex">
       <Link to ="/home">
         <div className="mb-2 flex items-center gap-4 p-4">
           <HomeIcon className="h-5 w-5" />
@@ -33,15 +35,15 @@ function SidebarLight() {
       </Link>
       <hr className="my-2 border-gray-200" />
       <List>
-        <Link to="/dashboard">
+        <Link to="/shifts">
           <ListItem className={LIST_ITEM_STYLES}>
             <ListItemPrefix>
-              <AdjustmentsHorizontalIcon className="h-5 w-5" />
+              <CalendarDateRangeIcon className="h-5 w-5" />
             </ListItemPrefix>
-            Dashboard
+            Turnos
           </ListItem>
         </Link>
-        <Link to="/">
+        <Link to="/patients">
           <ListItem className={LIST_ITEM_STYLES}>
             <ListItemPrefix>
               <UserCircleIcon className="h-5 w-5" />
@@ -55,6 +57,14 @@ function SidebarLight() {
               <Cog8ToothIcon className="h-5 w-5" />
             </ListItemPrefix>
             Configura tu Horario
+          </ListItem>
+        </Link>
+        <Link to="/profile">
+          <ListItem className={LIST_ITEM_STYLES}>
+            <ListItemPrefix>
+              <AdjustmentsHorizontalIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Configura tu Perfil
           </ListItem>
         </Link>
         { user.token ?
@@ -72,6 +82,8 @@ function SidebarLight() {
         
       </List>
     </Card>
+    </div>
+    
   );
 }
 

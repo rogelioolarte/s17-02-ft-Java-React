@@ -5,7 +5,7 @@ import Sidebar from "./components/container/Sidebar";
 export default function Appp() {
   return (
       <RequireAuth>
-        <div className="min-h-full min-w-full relative flex justify-center">
+        <div className="min-h-full min-w-full flex justify-center">
           <Sidebar />
           <Outlet/>
         </div>
