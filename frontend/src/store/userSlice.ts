@@ -43,6 +43,8 @@ export const DEFAULT_STATE_PROFILE: Profile = {
   email: "",
 }
 
+export const DEFAULT_STATE_SPECIALISTS = []
+
 export const DEFAULT_STATE_SPECIALIST: Specialist = {
   specialistId: "",
   specialistCode: "",

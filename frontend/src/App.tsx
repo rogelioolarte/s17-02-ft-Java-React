@@ -9,7 +9,7 @@ import { useLocationActions } from './hooks/useLocationActions'
 import { getDepartments } from './services/departmentsService'
 import { isValidLocations } from './store/locationSlice'
 import { useSpecialtyActions } from './hooks/useSpecialtyActions'
-import { getSpecialties } from './services/specialistService'
+import { getSpecialties } from './services/specialtyService'
 import { isValidSpecialties } from './store/specialtySlice'
 
 function App() {

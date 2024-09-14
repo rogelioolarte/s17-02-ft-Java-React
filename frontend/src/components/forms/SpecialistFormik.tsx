@@ -11,6 +11,7 @@ import CustomFormField from '../pure/CustomFormField';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { useSpecialtyActions } from '../../hooks/useSpecialtyActions';
+import { registerSpecialist } from '../../services/specialistService';
 
 interface SpecialistFormValues {
   specialistCode: string;
@@ -47,15 +48,12 @@ export default function SpecialistFormik() {
     { setSubmitting }: FormikHelpers<SpecialistFormValues>
   ) => {
     setSubmitting(false);
+    console.log('valores antes de enviar al backend' + values)
     toast.success('Registrando especialista...', { duration: 2000, closeButton: true });
-    const specialistData = {
-      specialistCode: values.specialistCode,
-      specialty: { specialtyId: values.specialtyId },
-      bookingPrice: values.bookingPrice,
-      reputation: 0,
-    };
-    console.log(specialistData); 
-    
+    const response = await registerSpecialist(values.specialistCode,
+      values.specialtyId, values.bookingPrice, 0)
+    console.log(response)
+    navigate("/home")
   };
 
   return (

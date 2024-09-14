@@ -8,6 +8,8 @@ export const ROUTE_BOOKINGS = "/api/bookings"
 export const ROUTE_CLINICAL_RECORDS = "/api/clinical-records"
 export const ROUTE_DEPARTMENT = "/api/department"
 export const ROUTE_SPECIALTY = "/api/specialty"
+export const ROUTE_SPECIALIST = "/api/specialist"
+export const ROUTE_UPDATE_SPECIALIST = "/api/specialist/update"
 export const ROUTE_PROFILES = "/api/profiles"
 export const ROUTE_UPDATE_PROFILE = "/api/profiles/update-profile"
 

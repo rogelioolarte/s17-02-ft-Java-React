@@ -102,7 +102,6 @@ export default function ProfileFormik({ type }: { type: string }) {
           navigate("/home")
         }
       }
-    
     } else if (type === "update") {
       toast.success('Actualizando Perfil...', { duration: 2000, closeButton: true })
       const response = await updateProfile(
