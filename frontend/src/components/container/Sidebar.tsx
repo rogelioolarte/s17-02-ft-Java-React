@@ -14,7 +14,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { Link, useNavigate } from "react-router-dom";
 import { useUserActions } from "../../hooks/useUserActions";
-import { CalendarDateRangeIcon } from "@heroicons/react/24/outline";
+import { BookOpenIcon, CalendarDateRangeIcon } from "@heroicons/react/24/outline";
 
 function SidebarLight() {
   const { user, useResetUser } = useUserActions()
@@ -40,15 +40,23 @@ function SidebarLight() {
             <ListItemPrefix>
               <CalendarDateRangeIcon className="h-5 w-5" />
             </ListItemPrefix>
-            Turnos
+            Citas Médicas
           </ListItem>
         </Link>
-        <Link to="/patients">
+        <Link to="/records">
           <ListItem className={LIST_ITEM_STYLES}>
             <ListItemPrefix>
               <UserCircleIcon className="h-5 w-5" />
             </ListItemPrefix>
-            Pacientes
+            Historiales Médicos
+          </ListItem>
+        </Link>
+        <Link to="/reviews">
+          <ListItem className={LIST_ITEM_STYLES}>
+            <ListItemPrefix>
+              <BookOpenIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Reseñas
           </ListItem>
         </Link>
         <Link to="/schedule">

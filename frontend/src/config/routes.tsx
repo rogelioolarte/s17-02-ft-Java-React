@@ -7,6 +7,7 @@ import MedicalRecordPage from '../pages/MedicalRecordPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import ProfilePage from '../pages/ProfilePage';
 import RegisterPage from '../pages/RegisterPage';
+import ReviewsPage from '../pages/ReviewsPage';
 import SchedulePage from '../pages/SchedulePage';
 import Shiftspage from '../pages/Shiftspage';
 
@@ -24,7 +25,8 @@ const routes = [
         children: [
           { path: '/home', element: <HomePage /> },
           { path: '/shifts', element: <Shiftspage /> },
-          { path: '/patients', element: <MedicalRecordPage /> },
+          { path: '/records', element: <MedicalRecordPage /> },
+          { path: '/reviews', element: <ReviewsPage /> },
           { path: '/schedule', element: <SchedulePage /> },
           { path: '/profile', element: <ProfilePage /> },
         ],
