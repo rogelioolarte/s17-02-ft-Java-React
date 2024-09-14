@@ -14,7 +14,23 @@ export const registerSpecialist = async(specialistCode: string,
             bookingPrice,
             reputation,
         });
-        return response.data.content
+        return response.data
+    } catch (error: any) {
+        managedCatchError(error)
+    }
+    return DEFAULT_STATE_SPECIALIST
+}
+
+export const updateSpecialist = async(specialistCode: string,
+    specialtyId: number, bookingPrice: number, reputation: number): Promise<Specialist> => {
+    try {
+        const response = await instance.post(ROUTE_SPECIALIST, {
+            specialistCode,
+            specialty: { specialtyId },
+            bookingPrice,
+            reputation,
+        });
+        return response.data
     } catch (error: any) {
         managedCatchError(error)
     }
