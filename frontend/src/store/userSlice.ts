@@ -56,7 +56,8 @@ export const isValidUser = (state: User): state is User => {
 
 const initialState: User = (() => {
   const persistedState = window.localStorage.getItem('session_state');
-  return persistedState ? (isValidUser(JSON.parse(persistedState).user) ? JSON.parse(persistedState).user : DEFAULT_STATE) : DEFAULT_STATE;
+  return persistedState ? (isValidUser(JSON.parse(persistedState).user) ?
+    JSON.parse(persistedState).user : DEFAULT_STATE) : DEFAULT_STATE;
 })();
 
 export const userSlice = createSlice({
