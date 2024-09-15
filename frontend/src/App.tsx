@@ -13,9 +13,19 @@ import { getSpecialties } from './services/specialtyService'
 import { isValidSpecialties } from './store/specialtySlice'
 
 function App() {
+  const location = useLocation()
   const { user } = useUserActions()
   const { locations, useInitLocations } = useLocationActions()
   const { specialties, useInitSpecialties } = useSpecialtyActions()
+  const [isExternalRoute, setIsExternalRoute] = useState(true)
+  const children = (
+    <div className='min-h-screen min-w-screen flex flex-col'>
+      { user.token === "" && isExternalRoute ? <NavBar/> : null }
+      <Outlet/>
+      <Footer/>
+      <Toaster visibleToasts={1} closeButton={true} />
+    </div>)
+
   const obtainDepartments = async () => {
     if(locations.length === 0) {
       const response = await getDepartments()
@@ -38,21 +48,13 @@ function App() {
       }
     }
   }
-  const location = useLocation()
-  const [isExternalRoute, setIsExternalRoute] = useState(true)
-  const children = (
-    <div className='min-h-screen min-w-screen flex flex-col'>
-      {user.token === "" && isExternalRoute ? 
-        <NavBar/> : null
-      }
-      <Outlet/>
-      <Footer/>
-      <Toaster visibleToasts={1} closeButton={true} />
-    </div>)
 
   useEffect(() => {
+    console.log(location.state)
     if(location.pathname === '/' || location.pathname === "/register/user" ||
-      location.pathname === "/register/specialist" || location.pathname === "/login") {
+      location.pathname === "/register/specialist" || location.pathname === "/login" ||
+      location.pathname === "/register/profile" || location.pathname === "/register/check"
+    ) {
       setIsExternalRoute(true)
     } else {
       setIsExternalRoute(false)
@@ -66,17 +68,22 @@ function App() {
       }, 2000);
       return () => clearInterval(intervalId);
     }
+  }, [locations, ]);
+
+  useEffect(() => {
     if (specialties.length === 0) {
       const intervalId = setInterval(() => {
         obtainSpecialties()
       }, 2000);
       return () => clearInterval(intervalId);
     }
-  }, [locations, specialties]);
+  }, [specialties])
 
-  /* if (user.token !== "" && isExternalRoute) {
-    return <Navigate to="/home" state={{ from: location }} replace />
-  } */
+  if ((user.token !== "" &&
+    (user.roleName === "ROLE_SPECIALIST"  || user.roleName === "ROLE_USER") &&
+    user.state === "final") && isExternalRoute) {
+    return <Navigate to="/home" replace />
+  }
   return children
 }
 

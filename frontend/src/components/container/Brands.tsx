@@ -14,7 +14,7 @@ export default function Brands() {
     ];
 
   return (
-    <div className="mt-10 mb-7">
+    <div className="mt-10 mb-7 max-w-[90%] flex flex-col self-center">
         <h2 className="text-center text-2xl font-bold">Nuestras marcas</h2>
         <div className="flex flex-wrap justify-center gap-6 mt-5">
           {brandsData.map((brand, idx) => (

@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { useSpecialtyActions } from '../../hooks/useSpecialtyActions';
 import { registerSpecialist } from '../../services/specialistService';
+import { useUserActions } from '../../hooks/useUserActions';
 
 interface SpecialistFormValues {
   specialistCode: string;
@@ -35,6 +36,7 @@ const specialistSchema = Yup.object().shape({
 
 export default function SpecialistFormik() {
   const { specialties } = useSpecialtyActions()
+  const { useSetUserState } = useUserActions()
   const navigate = useNavigate();
 
   const initialCredentials: SpecialistFormValues = {
@@ -48,11 +50,12 @@ export default function SpecialistFormik() {
     { setSubmitting }: FormikHelpers<SpecialistFormValues>
   ) => {
     setSubmitting(false);
-    console.log('valores antes de enviar al backend' + values)
+    console.log('valores antes de enviar al backend' + JSON.stringify(values))
     toast.success('Registrando especialista...', { duration: 2000, closeButton: true });
     const response = await registerSpecialist(values.specialistCode,
       values.specialtyId, values.bookingPrice, 0)
     console.log(response)
+    useSetUserState("final")
     navigate("/home")
   };
 

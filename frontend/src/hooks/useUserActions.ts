@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from './store'
-import { resetUser, setUser, updateUser, setProfile,
+import { setUserState, resetUser, setUser, updateUser, setProfile,
   updateProfile, setSpecialist, updateSpecialist } from '../store/userSlice'
 import { resetLocations } from '../store/locationSlice'
 import { resetSpecialties } from '../store/specialtySlice'
@@ -8,7 +8,18 @@ import { Profile, Specialist, User } from '../models/type'
 export const useUserActions = () => {
   const user: User = useAppSelector(state => state.user)
   const dispatch = useAppDispatch()
+  const isRegistered = (user.token !== "" && user.profile?.profileId !== "" &&
+    (user.specialist?.specialistCode !== ""  || user.roleName === "ROLE_USER") &&
+    user.state === "final")
 
+  /**
+   * This method set a User in the Context
+   * @param {*} data This parameter required a User 
+   */
+  const useSetUserState = (data: string) => {
+    dispatch(setUserState(data))
+  }
+  
   /**
    * This method set a User in the Context
    * @param {*} data This parameter required a User 
@@ -67,6 +78,6 @@ export const useUserActions = () => {
     
   }
 
-  return { user, useResetUser, useSetUser, useUpdateUser,
+  return { user, isRegistered, useSetUserState, useResetUser, useSetUser, useUpdateUser,
     useSetProfile, useUpdateProfile, useSetSpecialist, useUpdateSpecialist }
 }

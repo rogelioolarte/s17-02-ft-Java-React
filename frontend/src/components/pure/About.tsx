@@ -2,7 +2,7 @@ import image from '../../assets/images/about/img_about.png'
 
 const About = () => {
   return (
-    <div className="mx-auto max-w-screen-lg flex justify-center items-center">
+    <div className="mx-auto flex justify-center items-center max-w-[90%]">
       <div className="flex flex-col md:flex-row">
         <div className="md:w-1/2 w-full p-5">
           <h2 className="text-2xl font-bold mt-3">Sobre Nosotros</h2>

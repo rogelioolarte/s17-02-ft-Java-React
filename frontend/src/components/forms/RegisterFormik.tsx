@@ -10,18 +10,15 @@ import {
 import CustomFormField from '../pure/CustomFormField';
 import { register } from '../../services/authService';
 import { useUserActions } from '../../hooks/useUserActions';
-import { isValidUser } from '../../store/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
-// Definir tipos para los valores del formulario
 interface RegisterFormValues {
   email: string;
   password: string;
   confirmPassword: string;
 }
 
-// Esquema de validación usando Yup
 const registerSchema = Yup.object().shape({
   email: Yup.string()
     .min(7, 'El correo electrónico no puede tener menos de 7 caracteres')
@@ -39,10 +36,8 @@ const registerSchema = Yup.object().shape({
     .required('Debes confirmar la contraseña'),
 });
 
-
-
 export default function RegisterFormik({ type }: { type: string }) {
-  const { useSetUser } = useUserActions()
+  const { useUpdateUser, useSetUserState } = useUserActions()
   const navigate = useNavigate()
 
   const initialCredentials: RegisterFormValues = {
@@ -56,11 +51,10 @@ export default function RegisterFormik({ type }: { type: string }) {
     setSubmitting(false)
     toast.success('Registrandose...', { duration: 2000, closeButton: true })
     const response = await register(values.email, values.password, type)
-    if(isValidUser(response)){
-      useSetUser(response)
-      if(response.token !== ""){
-        navigate("/register/profile", { state: { fromRegister: type }} )
-      }
+    if(response.token !== ""){
+      useUpdateUser(response)
+      useSetUserState("register")
+      navigate("/register/profile", { state: { fromRegister: type }} )
     }
   };
 

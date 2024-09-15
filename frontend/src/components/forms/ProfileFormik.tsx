@@ -59,7 +59,7 @@ export default function ProfileFormik({ type }: { type: string }) {
   const location = useLocation()
   const navigate = useNavigate()
   const { locations } = useLocationActions();
-  const { user, useSetProfile, useUpdateProfile }  = useUserActions()
+  const { user, useSetProfile, useUpdateProfile, useSetUserState }  = useUserActions()
   const [cities, setCities] = useState(locations.length > 0 ? locations[0].cities : []);
 
   const initialCredentials: ProfileFormValues = {
@@ -97,9 +97,11 @@ export default function ProfileFormik({ type }: { type: string }) {
       useSetProfile(response)
       if(response.profileId !== ""){
         if(location.state.fromRegister === "specialist") {
-          navigate("/register/check")
-        } else {
-          navigate("/home")
+          useSetUserState("check")
+          navigate("/register/check", { state: null })
+        } else if(location.state.fromRegister === "user") {
+          useSetUserState("final")
+          navigate("/home", { state: null })
         }
       }
     } else if (type === "update") {

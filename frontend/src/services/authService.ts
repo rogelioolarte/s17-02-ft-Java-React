@@ -10,7 +10,7 @@ export const managedCatchError= (error: any) => {
         toast.error(error.response.data.message || "Error en la solicitud", 
             { duration: 2000, closeButton: true });
     } else if (error.code === 'ECONNABORTED') {
-        toast.error("El servico se encuentra en suspensión. Visite el repositorio para mas información", 
+        toast.error("El servico se encuentra en suspensión. Visite nuestro repositorio para mas información", 
             { duration: 3000, closeButton: true });
     } 
     else {

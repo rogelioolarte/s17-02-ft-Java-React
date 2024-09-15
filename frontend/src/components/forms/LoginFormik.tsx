@@ -8,19 +8,16 @@ import {
   Button,
 } from '@material-tailwind/react';
 import CustomFormField from '../pure/CustomFormField';
-import { login } from '../../services/authService'; // Suponiendo que existe un servicio para login
+import { login } from '../../services/authService';
 import { useUserActions } from '../../hooks/useUserActions';
-import { isValidUser } from '../../store/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
-// Definir tipos para los valores del formulario
 interface LoginFormValues {
   email: string;
   password: string;
 }
 
-// Esquema de validación usando Yup
 const loginSchema = Yup.object().shape({
   email: Yup.string()
     .email('Formato de correo inválido')
@@ -36,7 +33,7 @@ const loginSchema = Yup.object().shape({
 });
 
 export default function LoginFormik() {
-  const { useSetUser } = useUserActions();
+  const { useUpdateUser, useSetUserState } = useUserActions();
   const navigate = useNavigate()
 
   const initialCredentials: LoginFormValues = {
@@ -49,11 +46,10 @@ export default function LoginFormik() {
     setSubmitting(false);
     toast.success('Iniciando sesión...', { duration: 2000, closeButton: true })
     const response = await login(values.email, values.password);
-    if (isValidUser(response)) {
-      useSetUser(response)
-      if(response.token !== ""){
-        navigate("/register/profile")
-      }
+    if (response.token !== "") {
+      useUpdateUser(response)
+      useSetUserState("final")
+      navigate("/home")
     }
   };
 

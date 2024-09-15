@@ -3,6 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { Profile, Specialist, User } from '../models/type';
 
 export const DEFAULT_STATE: User = {
+  state: "",
   token: "",
   roleName: "",
   roleId: "",
@@ -52,7 +53,8 @@ export const DEFAULT_STATE_SPECIALIST: Specialist = {
   specialistLastname: ""
 }
 
-const expectedUserStateKeys = ['token', 'roleName', 'roleId', 'userId', 'username'];
+const expectedUserStateKeys = [
+  'state', 'token', 'roleName', 'roleId', 'userId', 'username', 'profile', 'specialist'];
 
 export const isValidUser = (state: User): state is User => {
   if (!expectedUserStateKeys.every(key => key in state)) {
@@ -70,8 +72,11 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser: (_state, action: PayloadAction<User>) => {
-      return { ...action.payload }
+    setUserState: (state, action: PayloadAction<string>) => {
+      return { ...state, state: action.payload }
+    },
+    setUser: (state, action: PayloadAction<User>) => {
+      return { ...state, ...action.payload }
     },
     updateUser: (state, action: PayloadAction<User>) => {
       return { ...state,
@@ -105,15 +110,15 @@ export const userSlice = createSlice({
     },
     updateSpecialist: (state, action: PayloadAction<Specialist>) => {
       return { ...state, specialist: {
-        specialistId: action.payload.specialistId,
-        specialistCode: action.payload.specialistCode,
-        specialtyId: action.payload.specialtyId,
-        specialtyName: action.payload.specialtyName,
-        bookingPrice: action.payload.bookingPrice,
-        reputation: action.payload.reputation,
-        specialistName: action.payload.specialistName,
-        specialistLastname: action.payload.specialistLastname
-    }
+          specialistId: action.payload.specialistId,
+          specialistCode: action.payload.specialistCode,
+          specialtyId: action.payload.specialtyId,
+          specialtyName: action.payload.specialtyName,
+          bookingPrice: action.payload.bookingPrice,
+          reputation: action.payload.reputation,
+          specialistName: action.payload.specialistName,
+          specialistLastname: action.payload.specialistLastname
+        }
       }
     },
     resetUser: () => {
@@ -124,6 +129,7 @@ export const userSlice = createSlice({
 
 export default userSlice.reducer
 export const {
+  setUserState,
   resetUser,
   setUser,
   updateUser,

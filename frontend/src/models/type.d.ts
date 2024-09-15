@@ -1,4 +1,5 @@
 export interface User {
+    state?: string,
     token: string,
     roleName: string,
     roleId: string,

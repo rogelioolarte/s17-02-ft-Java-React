@@ -26,7 +26,7 @@ const ServicesData = [
 
 export default function Service() {
   return (
-    <section className="container mx-auto mt-12">
+    <section className="container mx-10 mt-12 max-w-[90%]">
       <div className="flex justify-center mb-12">
         <h2 className="text-center text-3xl font-bold">Optimiza tu trabajo</h2>
       </div>
