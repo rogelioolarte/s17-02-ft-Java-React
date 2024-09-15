@@ -2,7 +2,7 @@
 import instance from '../config/axiosConfig';
 import { ROUTE_SPECIALTY } from '../config/routes_api';
 import { Specialty } from '../models/type';
-import { DEFAULT_STATE_SPECIALTY } from '../store/specialtySlice';
+import { DEFAULT_SPECIALTIES } from '../store/specialtySlice';
 import { managedCatchError } from './authService';
 
 export const getSpecialties = async(): Promise<Specialty[]> => {
@@ -16,5 +16,5 @@ export const getSpecialties = async(): Promise<Specialty[]> => {
     } catch (error: any) {
         managedCatchError(error)
     }
-    return DEFAULT_STATE_SPECIALTY
+    return DEFAULT_SPECIALTIES
 }

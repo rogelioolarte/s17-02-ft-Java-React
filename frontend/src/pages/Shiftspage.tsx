@@ -5,8 +5,8 @@ export default function Shiftspage() {
   return (
     <div className="flex justify-center min-h-full w-full">
       <DynamicTable tableHead={TABLE_HEAD} tableRow={TABLE_ROW}
-      title="Listado y Búsqueda de Citas Médicas"
-      description=""
+        title="Listado y Búsqueda de Citas Médicas"
+        description=""
       />
     </div>
   )

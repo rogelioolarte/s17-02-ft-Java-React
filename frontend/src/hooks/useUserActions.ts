@@ -3,6 +3,7 @@ import { setUserState, resetUser, setUser, updateUser, setProfile,
   updateProfile, setSpecialist, updateSpecialist } from '../store/userSlice'
 import { resetLocations } from '../store/locationSlice'
 import { resetSpecialties } from '../store/specialtySlice'
+import { resetSpecialists } from '../store/specialistSlice'
 import { Profile, Specialist, User } from '../models/type'
 
 export const useUserActions = () => {
@@ -72,6 +73,7 @@ export const useUserActions = () => {
    * This method reset the User
    */
   const useResetUser = () => {
+    dispatch(resetSpecialists())
     dispatch(resetSpecialties())
     dispatch(resetLocations())
     dispatch(resetUser())

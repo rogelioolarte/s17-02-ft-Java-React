@@ -3,6 +3,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import userReducer from './userSlice'
 import locationReducer from './locationSlice'
 import specialtyReducer from './specialtySlice'
+import specialistReducer from './specialistSlice'
 
 const persistanceLocalStorageMiddleware = (store: any) => (next: any) => (action: any) => {
   next(action)
@@ -13,7 +14,8 @@ export const store = configureStore({
   reducer: {
     user: userReducer,
     locations: locationReducer,
-    specialties: specialtyReducer
+    specialties: specialtyReducer,
+    specialists: specialistReducer
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware()

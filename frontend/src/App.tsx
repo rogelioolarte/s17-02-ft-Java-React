@@ -27,25 +27,21 @@ function App() {
     </div>)
 
   const obtainDepartments = async () => {
-    if(locations.length === 0) {
-      const response = await getDepartments()
-      if(isValidLocations(response)){
-        useInitLocations(response)
-      } else {
-        toast.error("El servidor API se encuentra iniciandose...",
-          { duration: 2000, closeButton: true });
-      }
+    const response = await getDepartments()
+    if(isValidLocations(response)){
+      useInitLocations(response)
+    } else {
+      toast.error("El servidor API se encuentra iniciandose...",
+        { duration: 2000, closeButton: true });
     }
   }
   const obtainSpecialties = async () => {
-    if(specialties.length === 0) {
-      const response = await getSpecialties()
-      if(isValidSpecialties(response)){
-        useInitSpecialties(response)
-      } else {
-        toast.error("El servidor API se encuentra iniciandose...",
-          { duration: 2000, closeButton: true });
-      }
+    const response = await getSpecialties()
+    if(isValidSpecialties(response)){
+      useInitSpecialties(response)
+    } else {
+      toast.error("El servidor API se encuentra iniciandose...",
+        { duration: 2000, closeButton: true });
     }
   }
 
@@ -62,21 +58,21 @@ function App() {
   }, [location.pathname])
 
   useEffect(() => {
-    if (locations.length === 0) {
       const intervalId = setInterval(() => {
-        obtainDepartments()
+        if (locations.length === 0) {
+          obtainDepartments()
+        }
       }, 2000);
       return () => clearInterval(intervalId);
-    }
-  }, [locations, ]);
+  }, [locations]);
 
   useEffect(() => {
-    if (specialties.length === 0) {
-      const intervalId = setInterval(() => {
+    const intervalId = setInterval(() => {
+      if (specialties.length === 0) {
         obtainSpecialties()
-      }, 2000);
-      return () => clearInterval(intervalId);
-    }
+      }
+    }, 2000);
+    return () => clearInterval(intervalId);
   }, [specialties])
 
   if ((user.token !== "" &&

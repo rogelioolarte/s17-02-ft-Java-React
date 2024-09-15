@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import instance from '../config/axiosConfig';
-import { ROUTE_SPECIALIST, ROUTE_SPECIALTY } from '../config/routes_api';
+import { ROUTE_SPECIALIST } from '../config/routes_api';
 import { Specialist } from '../models/type';
-import { DEFAULT_STATE_SPECIALIST, DEFAULT_STATE_SPECIALISTS } from '../store/userSlice';
+import { DEFAULT_SPECIALISTS, DEFAULT_ITEM_SPECIALIST } from '../store/specialistSlice';
 import { managedCatchError } from './authService';
 
 export const registerSpecialist = async(specialistCode: string,
@@ -18,7 +18,7 @@ export const registerSpecialist = async(specialistCode: string,
     } catch (error: any) {
         managedCatchError(error)
     }
-    return DEFAULT_STATE_SPECIALIST
+    return DEFAULT_ITEM_SPECIALIST
 }
 
 export const updateSpecialist = async(specialistCode: string,
@@ -34,15 +34,15 @@ export const updateSpecialist = async(specialistCode: string,
     } catch (error: any) {
         managedCatchError(error)
     }
-    return DEFAULT_STATE_SPECIALIST
+    return DEFAULT_ITEM_SPECIALIST
 }
 
 export const getSpecialists = async(): Promise<Specialist[]> => {
     try {
-        const response = await instance.get(ROUTE_SPECIALTY);
+        const response = await instance.get(ROUTE_SPECIALIST);
         return response.data.content
     } catch (error: any) {
         managedCatchError(error)
     }
-    return DEFAULT_STATE_SPECIALISTS
+    return DEFAULT_SPECIALISTS
 }

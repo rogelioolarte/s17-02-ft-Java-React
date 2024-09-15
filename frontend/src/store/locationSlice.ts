@@ -4,7 +4,7 @@ import { Department } from '../models/type';
 
 export const DEFAULT_STATE_LOCATION: Department[] = []
 
-export const DEFAULT_ITEM: Department = { 
+export const DEFAULT_ITEM_DEPARTMENT: Department = { 
     departmentId: 0,
     departmentName: "",
     cities: []

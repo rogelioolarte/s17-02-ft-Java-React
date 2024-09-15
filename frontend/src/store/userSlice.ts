@@ -44,15 +44,6 @@ export const DEFAULT_STATE_PROFILE: Profile = {
   email: "",
 }
 
-export const DEFAULT_STATE_SPECIALISTS = []
-
-export const DEFAULT_STATE_SPECIALIST: Specialist = {
-  specialistId: "",
-  specialistCode: "",
-  specialistName: "",
-  specialistLastname: ""
-}
-
 const expectedUserStateKeys = [
   'state', 'token', 'roleName', 'roleId', 'userId', 'username', 'profile', 'specialist'];
 
@@ -63,7 +54,7 @@ export const isValidUser = (state: User): state is User => {
   return true;
 };
 
-const initialState = (() => {
+const initialState: User = (() => {
   const persistedState = window.localStorage.getItem('session_state');
   return persistedState ? (isValidUser(JSON.parse(persistedState).user) ? JSON.parse(persistedState).user : DEFAULT_STATE) : DEFAULT_STATE;
 })();
@@ -91,7 +82,7 @@ export const userSlice = createSlice({
       return { ...state, profile: { ...action.payload } }
     },
     updateProfile: (state, action: PayloadAction<Profile>) => {
-      return { state, profile: {
+      return { ...state, profile: {
           profileId: action.payload.profileId,
           profileName:action.payload.profileName,
           profileLastname: action.payload.profileLastname,

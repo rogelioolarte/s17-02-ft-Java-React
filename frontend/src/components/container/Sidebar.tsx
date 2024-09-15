@@ -29,7 +29,7 @@ export function Sidebar() {
         <div className="mb-2 flex items-center gap-4 p-4">
           <HomeIcon className="h-5 w-5" />
           <Typography color="blue-gray" className="text-lg font-bold">
-            Home
+            Inicio
           </Typography>
         </div>
       </Link>
